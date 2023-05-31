@@ -9,7 +9,6 @@ from .priceImpact import priceImpactSellSize, convergePrices, simulateArb, simul
 from .getBalance import getBalance
 from .approveSpend import approveSpend,multiApprove
 from .swapTokensForTokens import swapTokensForTokens
-from .cross_dex_arb import cross_dex_arb
 from .sort_pair import sort_pair
 from .decode_tx_input import decode_tx_input
 from .mempool import filter_pending
