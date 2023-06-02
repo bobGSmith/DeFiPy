@@ -29,7 +29,7 @@ Functions
 
 '''
 
-from DeFiPy import *
+from DeFiPy import attach
 import json
 import time
 import pprint
