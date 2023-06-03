@@ -63,26 +63,19 @@ def get_functions(abi):
 def fix_args(w3,args): 
     fixed = []
     for a in args:
-        if a[0] == "[":
-            a_fixed = a.replace("[","")
-            a_fixed = a_fixed.replace("]","")
-            a_fixed = a_fixed.split(",")
-            a_fixed = [x.strip() for x in a_fixed]
-            if a_fixed[0][0:2] == "0x":
-                a_fixed = [w3.to_checksum_address(x) for x in a_fixed]
-            elif a_fixed[0].isnumeric():
-                a_fixed = [int(x) for x in a_fixed]
+        if isinstance(a,list):
+            a_fixed = fix_args(w3,a)
             fixed.append(a_fixed)
-        elif a[0:2] == "0x":
-            a_fixed = w3.to_checksum_address(a)
-            fixed.append(a_fixed)
+        elif a[0:2] == "0x" and len(a) == 42:
+            try: 
+                a_fixed = w3.to_checksum_address(a)
+                fixed.append(a_fixed)
+            except: fixed.append(a)
         elif a.isnumeric():
             a_fixed = int(a)
             fixed.append(a_fixed)        
         else: 
-            fixed.append(a) 
-        
-            
+            fixed.append(a)  
     return fixed
 
 def auto_ui_cli(w3,contracts_json_path, tx_history = {}):
@@ -121,9 +114,12 @@ def auto_ui_cli(w3,contracts_json_path, tx_history = {}):
         if fn["inputs"] != "":
             args_entered = False 
             while not args_entered:
-                args = [x.strip() for x in input('Enter input args (separate by ";") > \n').split(";")]
+                print('Arg Input: separate args by "," args should be wrapped in double quotes e.g.')
+                print('  * example args for fn(uint256, uint256[2]) -> "1000000000000000000",["34562","12351"]')
+                args = input('Enter args > ')
                 if len(args) != fn["n_args"]:
-                    print("incorrect number of args entered, remember to separate by ';'")
+                    print('incorrect number of args entered, remember to separate by "," args should be wrapped in double quotes e.g.')
+                    print('  * example args for fn(uint256, uint256[2]) -> "1000000000000000000",["34562","12351"]')
                     input("hit return to try again... ")
                 else: args_entered = True
         callable = getattr(contract.functions, fn["name"])
@@ -139,6 +135,7 @@ def auto_ui_cli(w3,contracts_json_path, tx_history = {}):
             try:
                 if fn["stateMutability"] == "view":
                     if fn["inputs"] != "":
+                        args = json.loads(f"[{args}]")
                         args = fix_args(w3,args)
                         print(args)
                         tx_history[t] = callable(*args).call() 
@@ -146,6 +143,7 @@ def auto_ui_cli(w3,contracts_json_path, tx_history = {}):
                         tx_history[t] = callable().call()
                 else: 
                     if fn["inputs"] != "":
+                        args = json.loads(f"[{args}]")
                         args = fix_args(w3,args)
                         print(args)
                         tx_history[t] = callable(*args).transact({"value":value,"gasPrice":w3.eth.gas_price})
