@@ -150,7 +150,7 @@ def auto_ui_cli(w3,contracts_json_path, tx_history = {}):
                     else:
                         tx_history[t] = callable().transact({"value":value,"gasPrice":w3.eth.gas_price})
                 print("Transaction executed at ",t)
-                pprint(tx_history[t])
+                pprint.pprint(tx_history[t])
             except Exception as e: 
                 print("Error")
                 print(e)
