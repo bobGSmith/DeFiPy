@@ -14,3 +14,10 @@ This is a work in progress..
 
 * `transact.py` - should maybe improve / test this. not sure how useful it is.  
 * `autoUi.py` - need to make this, accepts address and abi for a contract and creates a interface for it (CLI, possibly tkinter too)
+
+## Scripts 
+### Auto UI 
+generates a user interface for smart contracts automatically from abi and address 
+
+### Chart 
+plots price chart of token in terminal
