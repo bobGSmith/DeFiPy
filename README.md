@@ -19,5 +19,14 @@ This is a work in progress..
 ### Auto UI 
 generates a user interface for smart contracts automatically from abi and address 
 
+
+
 ### Chart 
 plots price chart of token in terminal
+
+It takes 3 args, Token, Denominator, n_days, for example: 
+
+```
+python3 -m DeFiPy.chart ethereum usd 10
+```
+
