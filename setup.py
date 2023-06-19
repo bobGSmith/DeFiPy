@@ -12,7 +12,8 @@ setup(
     install_requires = [
         'web3==6.5.0',
         'termplotlib==0.3.9',
-        'PwAES @ git+https://github.com/bobGSmith/PwAES@master'
+        'PwAES @ git+https://github.com/bobGSmith/PwAES@master',
+        "CursedUi @ git+https://github.com/bobGSmith/CursedUi@master"
     ],
     calssifiers = [
         'Development Status :: 2 - Pre-Alpha',

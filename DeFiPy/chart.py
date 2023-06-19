@@ -31,9 +31,9 @@ try:
 	times = []
 	xlabs = []
 	for i, price in enumerate(data["prices"]):
-	    xlabs.append(i)
-	    times.append(price[0])
-	    prices.append(price[1])
+		xlabs.append(i)
+		times.append(price[0])
+		prices.append(price[1])
 	 
 	width = int(os.get_terminal_size().lines * 3)
 
