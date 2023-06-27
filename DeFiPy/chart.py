@@ -4,15 +4,15 @@
 Display token price charts in terminal 
 
 Run as script:
-python3 -m DeFiPy.chart TOKEN DENOMINATE_IN N_DAYS
+python3 -m DeFiPy.chart TOKEN DENOMINATE_IN N_DAYS MPL_TPL 
 
 Where TOKEN is the token you want to chart, DENOMINATE is what you want it priced in (e.g. USD), 
 and N_DAYS is the number of days you want the chart to cover. 
+MPL_TPL is a string either "mpl" or "tpl". "tpl" will produce a plot in terminal, "mpl" will pop up a matplotlib plot.
 '''
 
 import requests 
 import sys
-import termplotlib as tpl
 from datetime import datetime
 import time
 import os 
@@ -32,20 +32,31 @@ try:
 	xlabs = []
 	for i, price in enumerate(data["prices"]):
 		xlabs.append(i)
-		times.append(price[0])
+		times.append(datetime.fromtimestamp(int(price[0])/1000))
 		prices.append(price[1])
 	 
-	width = int(os.get_terminal_size().lines * 3)
+	
 
 	start = datetime.fromtimestamp(time.time() - (days * 86400))
 	t_now = datetime.fromtimestamp(time.time())
 	print(f"Terminal Token Chart ({t}/{d})")
 	print(f"Range: {start} - {t_now} ({days} days)")
 	print(f"Current Price: {round(data['prices'][-1][1],4)} {d}")
-	fig = tpl.figure()
-	fig.plot(xlabs,prices,width=width,height=(width//3)-4)
-	fig.show()
-	
+ 	
+	if sys.argv[4].lower() == "tpl": 
+		import termplotlib as tpl
+		width = int(os.get_terminal_size().lines * 3)
+		fig = tpl.figure()
+		fig.plot(xlabs,prices,width=width,height=(width//3)-4)
+		fig.show()
+	else: 
+		import matplotlib.pyplot as plt 
+		plt.plot(times,prices)
+		plt.title(f"{t}/{d}: {round(data['prices'][-1][1],4)}")
+		plt.xticks(rotation=45)
+		plt.ylabel(f"price ({d})")
+		plt.tight_layout()
+		plt.show()	
 except Exception as e: 
 	print(f"Error: {e}")
 	print("See Docs below\n") 
