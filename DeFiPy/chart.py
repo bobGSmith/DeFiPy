@@ -17,15 +17,15 @@ from datetime import datetime
 import time
 import os 
 
-
 try: 
 	t = sys.argv[1] 
 	d = sys.argv[2] 
 	days = int(sys.argv[3])
 
-	url = f'https://api.coingecko.com/api/v3/coins/{t}/market_chart?vs_currency={d}&days={days}&interval=hourly'
+	url = f'https://api.coingecko.com/api/v3/coins/{t}/market_chart?vs_currency={d}&days={days}'#&interval=hourly'
 
 	data = (requests.get(url, headers = {"accept":"application/json"})).json()
+
 
 	prices = []
 	times = []
@@ -44,11 +44,14 @@ try:
 	print(f"Current Price: {round(data['prices'][-1][1],4)} {d}")
  	
 	if sys.argv[4].lower() == "tpl": 
-		import termplotlib as tpl
+		import plotext as plt 
 		width = int(os.get_terminal_size().lines * 3)
-		fig = tpl.figure()
-		fig.plot(xlabs,prices,width=width,height=(width//3)-4)
-		fig.show()
+		plt.plot(xlabs,prices)
+		plt.title(f"{t} price: {days} days")
+		plt.xlabel("days")
+		plt.ylabel(f"Price ({d})")
+		plt.theme("matrix")
+		plt.show()
 	else: 
 		import matplotlib.pyplot as plt 
 		plt.plot(times,prices)
@@ -56,8 +59,8 @@ try:
 		plt.xticks(rotation=45)
 		plt.ylabel(f"price ({d})")
 		plt.tight_layout()
-		plt.show()	
+		plt.show()	    
 except Exception as e: 
-	print(f"Error: {e}")
+	print(f"Error {e}")
 	print("See Docs below\n") 
 	print(__doc__)

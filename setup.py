@@ -11,7 +11,7 @@ setup(
     packages = ['DeFiPy'],
     install_requires = [
         'web3==6.5.0',
-        'termplotlib==0.3.9',
+        'plotext==5.2.8',
         'PwAES @ git+https://github.com/bobGSmith/PwAES@master',
         "CursedUi @ git+https://github.com/bobGSmith/CursedUi@master"
     ],
