@@ -13,5 +13,5 @@ BLOCK_EXPLORER_APIS = {
     "arbitrum":"https://api.arbiscan.io/",
     "ethereum":"https://api.etherscan.io/",
     "avalanche":"https://api.snowtrace.io/",
-    "fantom":"https://api.ftmscan.io/"
+    "fantom":"https://api.ftmscan.com/"
 }
