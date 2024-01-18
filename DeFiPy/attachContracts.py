@@ -20,9 +20,9 @@ def attach(w3,address,abi):
         abi = abi
     )
 
-def quick_attach (w3, address, block_explorer_url="https://api.etherscan.io/"):
-    '''Attach to verified contract, getting abi from blockexplorer api'''
-    abi = requests.get(f"{block_explorer_url}api?module=contract&action=getabi&address={address}&format=raw")
+def quick_attach (w3, address, block_explorer_url="https://api.etherscan.io/",proxy_contract=False):
+    '''Attach to verified contract, getting abi from blockexplorer api, if proxy_contract put address'''
+    abi = requests.get(f"{block_explorer_url}api?module=contract&action=getabi&address={address if proxy_contract == False else proxy_contract}&format=raw")
     return w3.eth.contract(
         address = w3.to_checksum_address(address),
         abi = abi.json()
