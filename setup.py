@@ -13,7 +13,8 @@ setup(
         'web3==6.5.0',
         'plotext==5.2.8',
         'PwAES @ git+https://github.com/bobGSmith/PwAES@master',
-        "CursedUi @ git+https://github.com/bobGSmith/CursedUi@master"
+        "CursedUi @ git+https://github.com/bobGSmith/CursedUi@master",
+        'requests==2.25.1'
     ],
     calssifiers = [
         'Development Status :: 2 - Pre-Alpha',

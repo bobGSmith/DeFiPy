@@ -1,5 +1,5 @@
 from .aes_load_wallets import aes_load_wallets
-from .attachContracts import attachContracts, attach
+from .attachContracts import attachContracts, attach, quick_attach
 from .connect import connect, connect_with_local_account
 from .transact import transact
 from .getPrice import getUniV2Price, getSolidlyVarPrice, getPrice
