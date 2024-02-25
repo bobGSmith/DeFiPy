@@ -1,3 +1,4 @@
+import requests
 def getUniV2Price(w3,pair,priceOf,denom,inWei=False):
     res_priceOf = priceOf.functions.balanceOf(pair.address).call() 
     res_denom = denom.functions.balanceOf(pair.address).call() 
@@ -23,4 +24,9 @@ def getPrice (
         return int((res_denom/res_priceOf)  * (10**(decimals_denom)))
     else: 
         return res_denom/res_priceOf
-    
+
+def getPriceCoinGecko (ids,vs):
+    "ids and vs are arrays of tokens"
+    url = f'https://api.coingecko.com/api/v3/simple/price?ids={"%2C".join(ids)}&vs_currencies={"%2C".join(vs)}'
+    res = requests.get(url, headers={"accept":"application/json"})
+    return res
