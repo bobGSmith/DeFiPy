@@ -14,7 +14,7 @@ setup(
         'plotext==5.2.8',
         'PwAES @ git+https://github.com/bobGSmith/PwAES@master',
         "CursedUi @ git+https://github.com/bobGSmith/CursedUi@master",
-        'requests==2.35.0'
+        'requests==2.31.0'
     ],
     calssifiers = [
         'Development Status :: 2 - Pre-Alpha',
